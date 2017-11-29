@@ -1,0 +1,8 @@
+redis
+flask
+numpy
+pandas
+xlrd
+requests
+psycopg2
+
