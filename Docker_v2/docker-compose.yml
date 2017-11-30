@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  get_tag_value_api: 
+  llc_get_tag_value_api: 
     build: .
     image: tagserver:1.0
     depends_on:
@@ -15,7 +15,7 @@ services:
     networks:
       recommand_system:
   
-  get_offer_api:
+  llc_get_offer_api:
     build: ./OFFER
     image: recommand_api:1.0 
     depends_on:
