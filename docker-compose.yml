@@ -6,39 +6,34 @@ services:
     depends_on:
       - postgres
       - redis
-    links:
-      - "redis:redis"
-      - "postgres:postgres"
     ports:
       - "6004:80"
-    container_name: tagserver
     networks:
-      recommand_system:
-  
+      recommend_system:
+
   llc_get_offer_api:
     build: ./Demo3/OFFER
-    image: recommand_api:1.0 
+    image: recommend:1.0 
     depends_on:
       - postgres
-      - redis  
+      - redis 
     ports:
       - "6003:80"
-    container_name: recommend
     networks:
-      recommand_system:
+      recommend_system:
 
   redis:
     image: redis:latest
-    container_name: redis
     networks:
-      recommand_system:
+      recommend_system:
+
   postgres:
     image: postgres:latest
-    container_name: postgres
     environment:
       POSTGRES_PASSWORD:
     networks:
-     recommand_system:
+      recommend_system:
+
 networks:
-  recommand_system:
+  recommend_system:
     driver: bridge
