@@ -4,8 +4,8 @@
 
 使用Dockerfile建立 tag_api:1.0 及 recommand_api:1.0 image
 ```
-docker build -t get_tag_value_api:1.0 .
-docker build -t get_offer_api:1.0 ./Offer
+docker build -t tagserver:1.0 ./Demo3
+docker build -t recommend:1.0 ./Demo3/OFFER
 ```
 下載最新版本的redis
 ```
