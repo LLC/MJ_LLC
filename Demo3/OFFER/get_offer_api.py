@@ -16,7 +16,8 @@ import re
 import sort_offer_function
 
 ip = 'redis'
-tagging = 'tagserver'
+#tagging = 'tagserver'
+tagging = 'llc_get_tag_value_api'
 reload(sys)
 sys.setdefaultencoding('utf8')
 
