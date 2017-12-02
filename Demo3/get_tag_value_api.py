@@ -46,10 +46,10 @@ def get_tag():
 
     for k in range(len(tag_info.values()[0])):
     	if str(tag_info.values()[0][k]['tagId']) == str(tagid):
-    		tag_info = tag_info.values()[0][k]
+    		tag_info_detail = tag_info.values()[0][k]
     		break
     
-    res = jsonify(tag_info)
+    res = jsonify(tag_info_detail)
     res.headers['Content-Type'] = 'application/json; charset=utf-8'
     return res
 
@@ -62,10 +62,10 @@ def get_tagValue():
 
     for k in range(len(tag_info.values()[0])):
     	if str(tag_info.values()[0][k]['tagId']) == str(tagid):
-    		tag_info = tag_info.values()[0][k]['tagValue']
+    		tag_info_detail = tag_info.values()[0][k]['tagValue']
     		break
     
-    res = jsonify(tag_info)
+    res = jsonify(tag_info_detail)
     res.headers['Content-Type'] = 'application/json; charset=utf-8'
     return res
 
