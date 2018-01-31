@@ -44,10 +44,10 @@ def get_recommend_offer(vid, tagid, lst):
 	for off in lst:
 	    for j in range(len(offer_label_Json)):
 	        if off == offer_label_Json[j]['offer_id']:
-	            offer_score.append(get_tag_cos(usr_tags(vid, tagid), offer_label_Json[j]['label']))
+	            offer_score.append(get_tag_cos(usr_tags(vid, tagid), offer_label_Json[j]['label'])) #比對顧客貼標和offer貼標
 
 	while(len(recommend_offer) < len(offer_score)):
-	    recommend_offer.append(lst[offer_score.index(max(offer_score))])
+	    recommend_offer.append(lst[offer_score.index(max(offer_score))]) #將OfferList中的OfferID依據與顧客貼標的相似程度高低進行排序
 	    offer_score[offer_score.index(max(offer_score))] = -1
 	  
 	return recommend_offer
