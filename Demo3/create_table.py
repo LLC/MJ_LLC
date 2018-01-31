@@ -11,6 +11,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8') 
 
+#將意圖標籤資料表進行前處理，並轉為JSON格式存入ProsgreSQL DB
 intent_table = pd.read_excel("INTENT_TAG.xlsx")
 intent_tag = list(intent_table)
 
@@ -61,6 +62,7 @@ for i in intent_Json:
     conn.commit()
 
 
+#將各個客群適合推薦的offer進行前處理，並轉為JSON格式存入ProsgreSQL DB
 xls = pd.ExcelFile('OfferID_LIST_TAG.xlsx')
 offer_table = xls.parse('Data_Offer')
 
