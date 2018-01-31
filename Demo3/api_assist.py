@@ -17,8 +17,8 @@ ip = 'redis'
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-r0 = redis.Redis(host=ip, port=6379, db=0)
-r1 = redis.Redis(host=ip, port=6379, db=1)
+r0 = redis.Redis(host=ip, port=6379, db=0) #輸入VID會回傳VID,batchTag和realtimeTag
+r1 = redis.Redis(host=ip, port=6379, db=1) #輸入TagValue會回傳offer_list
 
 table1 = pd.read_excel("TAG_LOG_DOWNLOAD.xlsx")
 table1['TAG_VALUE'] = ""
@@ -32,15 +32,11 @@ database='postgres'
 host = 'postgres'
 user = 'postgres'
 password = ''
-#conn = psycopg2.connect(database = "MJ",
-#                        host = "localhost",
-#                        user = "llc",
-#                        password = "")
+
 conn = psycopg2.connect(database = database,
                         host = host,
                         user = user,
                         password = password)
-
 
 cur = conn.cursor()
 
@@ -68,7 +64,7 @@ for i in unique_ID:
         query_update = {}
         query_temp = tag_db_query(unique_ID_table['UTID'].values[j],cur)
 
-        query_update['scenario'] = query_temp['scenario']
+        query_update['scenario'] = query_temp['scenario'] #將batchTag所需的欄位進行整理
         query_update['recommendWeight'] = query_temp['recommedWeight']
         query_update['dataSource'] = query_temp['dataSource']
         query_update['securityFilter'] = query_temp['securityFilter']
@@ -81,23 +77,9 @@ for i in unique_ID:
         temp_list.append(query_update)
 
     temp_detail['batchTag'] = temp_list
-    r0.set(i, json.dumps(temp_detail,ensure_ascii=False))
+    r0.set(i, json.dumps(temp_detail,ensure_ascii=False)) #將VID,batchTag和realtimeTag等資料透過redis DB來存取
 
 unique_tagValue = list(np.unique(table2['TAG_VALUE']))
 for value in unique_tagValue:
     offer_list = {"tag_value":value, "offer_list":offer_db_query(value, cur)['offer_list']}
-    r1.set(value, offer_list)
-    #r1.set(value, offer_db_query(value, cur)['offer_list'])
-
-def getTagValue(ID, tagID):
-    for i in range(len(table2)):
-        if table2['ID'][i] == ID and table2['UTID'][i] == tagID:
-            return table2['TAG_VALUE'][i]
-        
-def getOffer(TAG_VALUE):
-    return offer_db_query(TAG_VALUE, cur)['offer_list']
-
-
-#tag_db_query('SEG001',cur)
-#print getOffer(getTagValue(1,'SEG001'))
-#get offer
+    r1.set(value, offer_list) #將offer_list透過redis DB來存取
