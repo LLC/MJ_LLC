@@ -37,45 +37,37 @@ def offer_db_query(TAG_VALUE, sql_db):
     return records
 '''
 
-@app.route('/GetTag',methods=['GET'])
+@app.route('/GetTag',methods=['GET']) #名為GetTag的API是採用GET的方法
 def get_tag():
     print 'Hi'
-    vid = request.args.get('vid')
+    vid = request.args.get('vid') #需要輸入VID,tagID
     tagid = request.args.get('tagid')
     tag_info = json.loads(r0.get(vid))
 
     for k in range(len(tag_info.values()[0])):
     	if str(tag_info.values()[0][k]['tagId']) == str(tagid):
-    		tag_info_detail = tag_info.values()[0][k]
+    		tag_info_detail = tag_info.values()[0][k] 
     		break
     
     res = jsonify(tag_info_detail)
     res.headers['Content-Type'] = 'application/json; charset=utf-8'
     return res
 
-@app.route('/GetTagValue',methods=['GET'])
+@app.route('/GetTagValue',methods=['GET']) #名為GetTagValue的API是採用GET的方法
 def get_tagValue():
     print 'Hi'
-    vid = request.args.get('vid')
+    vid = request.args.get('vid') #需要輸入VID,tagID
     tagid = request.args.get('tagid')
     tag_info = json.loads(r0.get(vid))
 
     for k in range(len(tag_info.values()[0])):
     	if str(tag_info.values()[0][k]['tagId']) == str(tagid):
-    		tag_info_detail = tag_info.values()[0][k]['tagValue']
+    		tag_info_detail = tag_info.values()[0][k]['tagValue'] 
     		break
     
-    res = jsonify(tag_info_detail)
+    res = jsonify(tag_info_detail) 
     res.headers['Content-Type'] = 'application/json; charset=utf-8'
-    return res
-
-'''
-@app.route('/add_numbers')
-def add_number():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', 0, type=int)
-    return jsonify(result=a + b)
-'''
+    return res #會回傳顧客所屬客群
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=80) #6004
