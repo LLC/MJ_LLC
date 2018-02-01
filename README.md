@@ -1,25 +1,35 @@
-# MJ_LLC
+# MJ_LLC(POC)
 
-使用Docker Run啟動服務流程
+## 客群推薦系統
 
-使用Dockerfile建立 tag_api:1.0 及 recommand_api:1.0 image
-```
-docker build -t tagserver:1.0 ./Demo3
-docker build -t recommend:1.0 ./Demo3/OFFER
-```
-下載最新版本的redis
-```
-docker run -itd --name redis redis:latest
-```
-下載Postgresql並修改其環境變數
-```
-docker run -itd --name postgres -e POSTGRES_PASSWORD=  postgres:latest
-```
-啟用Tag Server
-```
-docker run -it --name tagserver -p 6004:80 --link redis:redis --link postgres:postgres tagserver:1.0
-```
-啟用Recommand System
-```
-docker run -it --name recommend -p 6003:80 --link tagserver:tagserver --link redis:redis --link postgres:postgres recommend:1.0
+### Structure
+```python
+├─Demo3
+│     ├──
+│      OFFER 
+│         ├── Dockerfile              #dockerfile   
+|         ├── OfferTag_1120.xlsx      #offerTag
+|         ├── get_offer_api.py        #input tagValue and output recommended offer_list
+|         └── sort_offer_function.py  #sort offer_list according to tag similarity between customer and offer
+│     │     
+│     ├── .DS_Store
+│     ├── Dockerfile                  #dockerfile
+│     ├── INTENT_TAG.xlsx             #intent tag metadata
+│     ├── OfferID_LIST_TAG.xlsx       #different TA Get different offer_list
+│     ├── TAG_LOG_DOWNLOAD.xlsx       #comparison table(ID/UTID)
+│     ├── TAG_Value_DOWNLOAD.xlsx     #comparison table(ID/UTID/TagValue)
+│     ├── api_assist.py               #content raw metadata to redis
+│     ├── create_table.py             #read spreadsheet, turn to JSON type and store in PostgreSQL DB
+│     ├── get_tag_value_api.py        #input VID and output tag_info or tagValue
+│     └── requirements.txt            #docker requirements
+│
+├─.DS_Store
+├─README.md
+└─docker-compose.yml             #docker-compose file
+
+## Usage
+### Demo3 
+use docker to build images & container.
+``` 
+$ docker-compose up
 ```
