@@ -1,0 +1,39 @@
+version: '3.3'
+services:
+  llc_get_tag_value_api: 
+    build: ./Demo3
+    image: tagserver:1.0
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "6004:80"
+    networks:
+      recommend_system:
+
+  llc_get_offer_api:
+    build: ./Demo3/offer
+    image: recommend:1.0 
+    depends_on:
+      - postgres
+      - redis 
+    ports:
+      - "6003:80"
+    networks:
+      recommend_system:
+
+  redis:
+    image: redis:latest
+    networks:
+      recommend_system:
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD:
+    networks:
+      recommend_system:
+
+networks:
+  recommend_system:
+    driver: bridge
