@@ -20,9 +20,9 @@ sys.setdefaultencoding('utf8')
 r0 = redis.Redis(host=ip, port=6379, db=0) #輸入VID會回傳VID,batchTag和realtimeTag
 r1 = redis.Redis(host=ip, port=6379, db=1) #輸入TagValue會回傳offer_list
 
-table1 = pd.read_excel("TAG_LOG_DOWNLOAD.xlsx")
+table1 = pd.read_excel("data/TAG_LOG_DOWNLOAD.xlsx")
 table1['TAG_VALUE'] = ""
-table2 = pd.read_excel("TAG_Value_DOWNLOAD.xlsx")
+table2 = pd.read_excel("data/TAG_Value_DOWNLOAD.xlsx")
 table_merge = pd.concat([table1.loc[:,:], table2.loc[:,:]], axis = 0)
 table_merge = table_merge.reset_index(drop=True)
 

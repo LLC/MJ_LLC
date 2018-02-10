@@ -12,7 +12,7 @@ services:
       recommend_system:
 
   llc_get_offer_api:
-    build: ./Demo3/OFFER
+    build: ./Demo3/offer
     image: recommend:1.0 
     depends_on:
       - postgres
